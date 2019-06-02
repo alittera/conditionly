@@ -91,10 +91,27 @@ class _MyHomePageState extends State<MyHomePage> {
           // the App.build method, and use it to set our appbar title.
           title: new Text(widget.title),
         ),
-        body: new Center(
-          // Center is a layout widget. It takes a single child and positions it
-          // in the middle of the parent.
-          child: new Column(
+        body: Column(children: <Widget>[
+          new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              new Column(children: <Widget>[
+                new Text(
+                  'Power: $_counter',
+                  style: Theme.of(context).textTheme.display1,
+                  textAlign: TextAlign.left,
+                ),
+              ],),
+              new Row(children: <Widget>[
+                new FloatingActionButton(
+                  onPressed: _decrementCounter,
+                  tooltip: '-1',
+                  child: new Text('Switch'),
+                ),
+              ],),
+            ],
+          ),
+          new Row(
             // Column is also layout widget. It takes a list of children and
             // arranges them vertically. By default, it sizes itself to fit its
             // children horizontally, and tries to be as tall as its parent.
@@ -108,30 +125,118 @@ class _MyHomePageState extends State<MyHomePage> {
             // center the children vertically; the main axis here is the vertical
             // axis because Columns are vertical (the cross axis would be
             // horizontal).
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              new Text(
-                'Set your preferred temperature',
-                style: Theme.of(context).textTheme.headline,
-              ),
-              new Text(
-                '$_counter',
-                style: Theme.of(context).textTheme.display1,
-              ),
+              new Column(children: <Widget>[
+                new Text(
+                  'Temperature: $_counter',
+                   style: Theme.of(context).textTheme.display1,
+                   textAlign: TextAlign.left,
+                 ),
+              ],),
+              new Row(children: <Widget>[
+                new FloatingActionButton(
+                   onPressed: _decrementCounter,
+                   tooltip: '-1',
+                   child: new Text('-'),
+                ),
+                new FloatingActionButton(
+                   onPressed: _incrementCounter,
+                   tooltip: '+1',
+                   child: new Text('+'),
+                )
+              ],),
             ],
           ),
-        ),
-        persistentFooterButtons: [
-          new FloatingActionButton(
-            onPressed: _decrementCounter,
-            tooltip: '-1',
-            child: new Text('-'),
+          new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              new Column(children: <Widget>[
+                new Text(
+                  'Fan: $_counter',
+                  style: Theme.of(context).textTheme.display1,
+                  textAlign: TextAlign.left,
+                ),
+              ],),
+              new Row(children: <Widget>[
+                new FloatingActionButton(
+                  onPressed: _decrementCounter,
+                  tooltip: '-1',
+                  child: new Text('-'),
+                ),
+                new FloatingActionButton(
+                  onPressed: _incrementCounter,
+                  tooltip: '+1',
+                  child: new Text('+'),
+                )
+              ],),
+            ],
           ),
-          new FloatingActionButton(
-            onPressed: _incrementCounter,
-            tooltip: '+1',
-            child: new Text('+'),
-          )
+          new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              new Column(children: <Widget>[
+                new Text(
+                  'Mode: $_counter',
+                  style: Theme.of(context).textTheme.display1,
+                  textAlign: TextAlign.left,
+                ),
+              ],),
+              new Row(children: <Widget>[
+                new FloatingActionButton(
+                  onPressed: _decrementCounter,
+                  tooltip: '-1',
+                  child: new Text('-'),
+                ),
+                new FloatingActionButton(
+                  onPressed: _incrementCounter,
+                  tooltip: '+1',
+                  child: new Text('+'),
+                )
+              ],),
+            ],
+          ),
+          new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              new Column(children: <Widget>[
+                new Text(
+                  'Swing: $_counter',
+                  style: Theme.of(context).textTheme.display1,
+                  textAlign: TextAlign.left,
+                ),
+              ],),
+              new Row(children: <Widget>[
+                new FloatingActionButton(
+                  onPressed: _decrementCounter,
+                  tooltip: '-1',
+                  child: new Text('Switch'),
+                ),
+              ],),
+            ],
+          ),
+          new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              new Column(children: <Widget>[
+                new Text(
+                  'SwingLR: $_counter',
+                  style: Theme.of(context).textTheme.display1,
+                  textAlign: TextAlign.left,
+                ),
+              ],),
+              new Row(children: <Widget>[
+                new FloatingActionButton(
+                  onPressed: _decrementCounter,
+                  tooltip: '-1',
+                  child: new Text('Switch'),
+                ),
+              ],),
+            ],
+          ),
+        ],),
+        persistentFooterButtons: [
+
           // This trailing comma makes auto-formatting nicer for build methods.
         ]);
   }
