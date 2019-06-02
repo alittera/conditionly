@@ -44,10 +44,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 18;
-  int _tmp = 27;
-  int _mode = 4;
-  int _fan = 5;
+  int _tmp = 22;
+  int _mode = 0;
+  int _fan = 0;
   bool _power = false;
   bool _swing = false;
   bool _swingLR = false;
@@ -56,6 +55,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   // Temperature
   void _incrementTmp() {
+    // This call to setState tells the Flutter framework that something has
+    // changed in this State, which causes it to rerun the build method below
+    // so that the display can reflect the updated values. If we changed
+    // _counter without calling setState(), then the build method would not be
+    // called again, and so nothing would appear to happen.
     setState(() {
 
       _tmp++;
@@ -144,36 +148,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-
-      _counter++;
-      if (_counter > 30) {
-        _counter = 30;
-      }
-      _publishToDevice(_counter.toString());
-    });
-  }
-
-  void _decrementCounter() {
-    setState(() {
-      _counter--;
-      if (_counter < 18) {
-        _counter = 18;
-      }
-      _publishToDevice(_counter.toString());
-    });
-  }
-
-  void _publishToDevice(String payload) {
-    platform.invokeMethod('publishToDevice', {"payload": payload});
-  }
-
+  //Send data to AWS IoT
   void _publishToCond() {
     String payload = '{' +
         '"power":${_power},' +

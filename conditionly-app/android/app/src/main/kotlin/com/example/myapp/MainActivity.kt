@@ -32,7 +32,7 @@ class MainActivity() : FlutterActivity() {
     private val CHANNEL = "samples.flutter.io/iot"
 
     private val TAG = "DEBUG"
-    private val topic = "conditionly/temperature"
+    private val topic = "conditionly/message"
 
     private val client: AWSIotMqttClient by lazy { connectToAws() }
 
@@ -60,7 +60,7 @@ class MainActivity() : FlutterActivity() {
 
     fun publish(payload: String) {
         val rootObject= JSONObject()
-        rootObject.put("temp",payload)
+        rootObject.put("message",payload)
         val msg = MyMessage(topic, AWSIotQos.QOS0, rootObject.toString())
         client.publish(msg, 3000)
     }
