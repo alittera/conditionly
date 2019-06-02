@@ -45,7 +45,104 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 18;
+  int _tmp = 27;
+  int _mode = 4;
+  int _fan = 5;
+  bool _power = false;
+  bool _swing = false;
+  bool _swingLR = false;
+
   static const platform = const MethodChannel('samples.flutter.io/iot');
+
+  // Temperature
+  void _incrementTmp() {
+    setState(() {
+
+      _tmp++;
+
+      if (_tmp > 32) {
+        _tmp = 32;
+      }
+    });
+  }
+
+  void _decrementTmp() {
+    setState(() {
+      _tmp--;
+      if (_tmp < 18) {
+        _tmp = 18;
+      }
+    });
+  }
+
+  // Mode
+  void _incrementMode() {
+    setState(() {
+
+      _mode++;
+
+      if (_mode > 4) {
+        _mode = 4;
+      }
+    });
+  }
+
+  void _decrementMode() {
+    setState(() {
+      _mode--;
+      if (_mode < 0) {
+        _mode = 0;
+      }
+    });
+  }
+
+  // Fan
+  void _incrementFan() {
+    setState(() {
+
+      _fan++;
+
+      if (_fan > 6) {
+        _fan = 6;
+      }
+    });
+  }
+
+  void _decrementFan() {
+    setState(() {
+      _fan--;
+      if (_fan < 0) {
+        _fan = 0;
+      }
+    });
+  }
+
+  // Power
+  void _switchPower() {
+    setState(() {
+
+      _power = !_power;
+
+    });
+  }
+
+  // Swing
+  void _switchSwing() {
+    setState(() {
+
+      _swing = !_swing;
+
+    });
+  }
+
+  // SwingLR
+  void _switchSwingLR() {
+    setState(() {
+
+      _swingLR = !_swingLR;
+
+    });
+  }
 
   void _incrementCounter() {
     setState(() {
@@ -77,6 +174,18 @@ class _MyHomePageState extends State<MyHomePage> {
     platform.invokeMethod('publishToDevice', {"payload": payload});
   }
 
+  void _publishToCond() {
+    String payload = '{' +
+        '"power":${_power},' +
+        '"mode":${_mode},' +
+        '"fan":${_fan},' +
+        '"swing":${_swing},' +
+        '"swingLR":${_swingLR},' +
+        '"temp":${_tmp}' +
+    '}';
+    platform.invokeMethod('publishToDevice', {"payload": payload});
+  }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -97,14 +206,14 @@ class _MyHomePageState extends State<MyHomePage> {
             children: <Widget>[
               new Column(children: <Widget>[
                 new Text(
-                  'Power: $_counter',
+                  'Power: $_power',
                   style: Theme.of(context).textTheme.display1,
                   textAlign: TextAlign.left,
                 ),
               ],),
               new Row(children: <Widget>[
                 new FloatingActionButton(
-                  onPressed: _decrementCounter,
+                  onPressed: _switchPower,
                   tooltip: '-1',
                   child: new Text('Switch'),
                 ),
@@ -129,19 +238,19 @@ class _MyHomePageState extends State<MyHomePage> {
             children: <Widget>[
               new Column(children: <Widget>[
                 new Text(
-                  'Temperature: $_counter',
+                  'Temperature: $_tmp',
                    style: Theme.of(context).textTheme.display1,
                    textAlign: TextAlign.left,
                  ),
               ],),
               new Row(children: <Widget>[
                 new FloatingActionButton(
-                   onPressed: _decrementCounter,
+                   onPressed: _decrementTmp,
                    tooltip: '-1',
                    child: new Text('-'),
                 ),
                 new FloatingActionButton(
-                   onPressed: _incrementCounter,
+                   onPressed: _incrementTmp,
                    tooltip: '+1',
                    child: new Text('+'),
                 )
@@ -153,19 +262,19 @@ class _MyHomePageState extends State<MyHomePage> {
             children: <Widget>[
               new Column(children: <Widget>[
                 new Text(
-                  'Fan: $_counter',
+                  'Fan: $_fan',
                   style: Theme.of(context).textTheme.display1,
                   textAlign: TextAlign.left,
                 ),
               ],),
               new Row(children: <Widget>[
                 new FloatingActionButton(
-                  onPressed: _decrementCounter,
+                  onPressed: _decrementFan,
                   tooltip: '-1',
                   child: new Text('-'),
                 ),
                 new FloatingActionButton(
-                  onPressed: _incrementCounter,
+                  onPressed: _incrementFan,
                   tooltip: '+1',
                   child: new Text('+'),
                 )
@@ -177,19 +286,19 @@ class _MyHomePageState extends State<MyHomePage> {
             children: <Widget>[
               new Column(children: <Widget>[
                 new Text(
-                  'Mode: $_counter',
+                  'Mode: $_mode',
                   style: Theme.of(context).textTheme.display1,
                   textAlign: TextAlign.left,
                 ),
               ],),
               new Row(children: <Widget>[
                 new FloatingActionButton(
-                  onPressed: _decrementCounter,
+                  onPressed: _decrementMode,
                   tooltip: '-1',
                   child: new Text('-'),
                 ),
                 new FloatingActionButton(
-                  onPressed: _incrementCounter,
+                  onPressed: _incrementMode,
                   tooltip: '+1',
                   child: new Text('+'),
                 )
@@ -201,14 +310,14 @@ class _MyHomePageState extends State<MyHomePage> {
             children: <Widget>[
               new Column(children: <Widget>[
                 new Text(
-                  'Swing: $_counter',
+                  'Swing: $_swing',
                   style: Theme.of(context).textTheme.display1,
                   textAlign: TextAlign.left,
                 ),
               ],),
               new Row(children: <Widget>[
                 new FloatingActionButton(
-                  onPressed: _decrementCounter,
+                  onPressed: _switchSwing,
                   tooltip: '-1',
                   child: new Text('Switch'),
                 ),
@@ -220,18 +329,27 @@ class _MyHomePageState extends State<MyHomePage> {
             children: <Widget>[
               new Column(children: <Widget>[
                 new Text(
-                  'SwingLR: $_counter',
+                  'SwingLR: $_swingLR',
                   style: Theme.of(context).textTheme.display1,
                   textAlign: TextAlign.left,
                 ),
               ],),
               new Row(children: <Widget>[
                 new FloatingActionButton(
-                  onPressed: _decrementCounter,
+                  onPressed: _switchSwingLR,
                   tooltip: '-1',
                   child: new Text('Switch'),
                 ),
               ],),
+            ],
+          ),
+          new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+                new RaisedButton(
+                  onPressed: _publishToCond,
+                  child: new Text('Send'),
+                ),
             ],
           ),
         ],),
