@@ -159,6 +159,7 @@ class _MyHomePageState extends State<MyHomePage> {
         '"temp":${_tmp}' +
     '}';
     platform.invokeMethod('publishToDevice', {"payload": payload});
+
   }
 
   @override
@@ -173,24 +174,35 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: new AppBar(
           // Here we take the value from the MyHomePage object that was created by
           // the App.build method, and use it to set our appbar title.
-          title: new Text(widget.title),
+          title: new Text(widget.title, style: TextStyle(fontSize: 22.0)),
+          centerTitle: true,
         ),
-        body: Column(children: <Widget>[
+        body: Padding(padding: EdgeInsets.all(14.0),
+        child: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
           new Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              new Column(children: <Widget>[
+              new Row(children: <Widget>[
                 new Text(
-                  'Power: $_power',
-                  style: Theme.of(context).textTheme.display1,
+                  'Power: ',
+                  style: TextStyle(fontSize: 26.0),
+                  textAlign: TextAlign.left,
+                ),
+                new Text(
+                  '$_power',
+                  style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.left,
                 ),
               ],),
               new Row(children: <Widget>[
-                new FloatingActionButton(
-                  onPressed: _switchPower,
-                  tooltip: '-1',
-                  child: new Text('Switch'),
+                Switch(
+                  value: _power,
+                  onChanged: (value) {
+                    setState(() {
+                      _power = value;
+                    });
+                  },
+
                 ),
               ],),
             ],
@@ -211,22 +223,29 @@ class _MyHomePageState extends State<MyHomePage> {
             // horizontal).
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              new Column(children: <Widget>[
+              new Row(children: <Widget>[
                 new Text(
-                  'Temperature: $_tmp',
-                   style: Theme.of(context).textTheme.display1,
-                   textAlign: TextAlign.left,
-                 ),
+                  'Temperature: ',
+                  style: TextStyle(fontSize: 26.0),
+                  textAlign: TextAlign.left,
+                ),
+                new Text(
+                  '$_tmp',
+                  style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.left,
+                ),
               ],),
               new Row(children: <Widget>[
                 new FloatingActionButton(
                    onPressed: _decrementTmp,
                    tooltip: '-1',
+                   mini: true,
                    child: new Text('-'),
                 ),
                 new FloatingActionButton(
                    onPressed: _incrementTmp,
                    tooltip: '+1',
+                   mini: true,
                    child: new Text('+'),
                 )
               ],),
@@ -235,66 +254,45 @@ class _MyHomePageState extends State<MyHomePage> {
           new Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              new Column(children: <Widget>[
+              new Row(children: <Widget>[
                 new Text(
-                  'Fan: $_fan',
-                  style: Theme.of(context).textTheme.display1,
+                  'Fan: ',
+                  style: TextStyle(fontSize: 26.0),
+                  textAlign: TextAlign.left,
+                ),
+                new Text(
+                  '$_fan',
+                  style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.left,
                 ),
               ],),
               new Row(children: <Widget>[
-                new FloatingActionButton(
-                  onPressed: _decrementFan,
-                  tooltip: '-1',
-                  child: new Text('-'),
-                ),
-                new FloatingActionButton(
-                  onPressed: _incrementFan,
-                  tooltip: '+1',
-                  child: new Text('+'),
-                )
-              ],),
-            ],
-          ),
-          new Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              new Column(children: <Widget>[
-                new Text(
-                  'Mode: $_mode',
-                  style: Theme.of(context).textTheme.display1,
-                  textAlign: TextAlign.left,
-                ),
-              ],),
-              new Row(children: <Widget>[
-                new FloatingActionButton(
-                  onPressed: _decrementMode,
-                  tooltip: '-1',
-                  child: new Text('-'),
-                ),
-                new FloatingActionButton(
-                  onPressed: _incrementMode,
-                  tooltip: '+1',
-                  child: new Text('+'),
-                )
-              ],),
-            ],
-          ),
-          new Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              new Column(children: <Widget>[
-                new Text(
-                  'Swing: $_swing',
-                  style: Theme.of(context).textTheme.display1,
-                  textAlign: TextAlign.left,
-                ),
-              ],),
-              new Row(children: <Widget>[
-                new FloatingActionButton(
-                  onPressed: _switchSwing,
-                  tooltip: '-1',
-                  child: new Text('Switch'),
+                Text("Select"),
+                PopupMenuButton<int>(
+                  icon: Icon(Icons.arrow_drop_down),
+                  onSelected: (int result) { setState(() { _fan = result; }); },
+                  itemBuilder: (BuildContext context) => <PopupMenuEntry<int>>[
+                    const PopupMenuItem(
+                      value: 0,
+                      child: Text('FAN'),
+                    ),
+                    const PopupMenuItem(
+                      value: 1,
+                      child: Text('COOL'),
+                    ),
+                    const PopupMenuItem(
+                      value: 2,
+                      child: Text('DRY'),
+                    ),
+                    const PopupMenuItem(
+                      value: 3,
+                      child: Text('HEAT'),
+                    ),
+                    const PopupMenuItem(
+                      value: 4,
+                      child: Text('AUTO'),
+                    ),
+                  ],
                 ),
               ],),
             ],
@@ -302,35 +300,127 @@ class _MyHomePageState extends State<MyHomePage> {
           new Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              new Column(children: <Widget>[
+              new Row(children: <Widget>[
                 new Text(
-                  'SwingLR: $_swingLR',
-                  style: Theme.of(context).textTheme.display1,
+                  'Mode: ',
+                  style: TextStyle(fontSize: 26.0),
+                  textAlign: TextAlign.left,
+                ),
+                new Text(
+                  '$_mode',
+                  style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.left,
                 ),
               ],),
               new Row(children: <Widget>[
-                new FloatingActionButton(
-                  onPressed: _switchSwingLR,
-                  tooltip: '-1',
-                  child: new Text('Switch'),
+                Text("Select"),
+                PopupMenuButton<int>(
+                  icon: Icon(Icons.arrow_drop_down),
+                  onSelected: (int result) { setState(() { _mode = result; }); },
+                  itemBuilder: (BuildContext context) => <PopupMenuEntry<int>>[
+                    const PopupMenuItem(
+                      value: 0,
+                      child: Text('SPEED 1'),
+                    ),
+                    const PopupMenuItem(
+                      value: 1,
+                      child: Text('SPEED 2'),
+                    ),
+                    const PopupMenuItem(
+                      value: 2,
+                      child: Text('SPEED 3'),
+                    ),
+                    const PopupMenuItem(
+                      value: 3,
+                      child: Text('SPEED 4'),
+                    ),
+                    const PopupMenuItem(
+                      value: 4,
+                      child: Text('SPEED 5'),
+                    ),
+                    const PopupMenuItem(
+                      value: 5,
+                      child: Text('AUTO'),
+                    ),
+                    const PopupMenuItem(
+                      value: 6,
+                      child: Text('NIGHT MODE'),
+                    ),
+                  ],
                 ),
               ],),
             ],
           ),
           new Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              new Row(children: <Widget>[
+                new Text(
+                  'Swing: ',
+                  style: TextStyle(fontSize: 26.0),
+                  textAlign: TextAlign.left,
+                ),
+                new Text(
+                  '$_swing',
+                  style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.left,
+                ),
+              ],),
+              new Row(children: <Widget>[
+                Switch(
+                  value: _swing,
+                  onChanged: (value) {
+                    setState(() {
+                      _swing = value;
+                    });
+                  },
+                ),
+              ],),
+            ],
+          ),
+          new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              new Row(children: <Widget>[
+                new Text(
+                  'SwingLR: ',
+                  style: TextStyle(fontSize: 26.0),
+                  textAlign: TextAlign.left,
+                ),
+                new Text(
+                  '$_swingLR',
+                  style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.left,
+                ),
+              ],),
+              new Row(children: <Widget>[
+                Switch(
+                  value: _swingLR,
+                  onChanged: (value) {
+                    setState(() {
+                      _swingLR = value;
+                    });
+                  },
+                ),
+              ],),
+            ],
+          ),
+          new Divider(),
+          new Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+
             children: <Widget>[
                 new RaisedButton(
                   onPressed: _publishToCond,
-                  child: new Text('Send'),
+                  child: new Text('SEND COMMAND', style: TextStyle(fontSize: 18.0, color: Colors.white)),
+                  color: Colors.blue,
+                  padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 16.0), // gives padding to the button),
                 ),
             ],
           ),
         ],),
-        persistentFooterButtons: [
-
-          // This trailing comma makes auto-formatting nicer for build methods.
-        ]);
+        ),
+    );
   }
 }
