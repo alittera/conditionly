@@ -52,7 +52,7 @@ class MainActivity() : FlutterActivity() {
 
     fun connectToAws(): AWSIotMqttClient {
         Log.d(TAG, "connect")
-        val client = AWSIotMqttClient("a3knmvk82jtze4-ats.iot.us-east-2.amazonaws.com", "123", "AKIAIDSAT653LMNPZ4RQ", "Q2M8urfOPcbmTlSnje+aS3/fRiC1slapZC0EV+9d")
+        val client = AWSIotMqttClient("a3knmvk82jtze4-ats.iot.us-east-2.amazonaws.com", "123", "access-key", "access-psw")
         client.connect()
         Log.d(TAG, client.getConnectionStatus().toString())
         return client
