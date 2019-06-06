@@ -13,6 +13,8 @@ import io.flutter.app.FlutterActivity
 import io.flutter.plugins.GeneratedPluginRegistrant
 import org.json.JSONObject
 
+
+
 class MyMessage(topic: String, qos: AWSIotQos, payload: String) : AWSIotMessage(topic, qos, payload) {
 
     override fun onSuccess() {
@@ -32,7 +34,8 @@ class MainActivity() : FlutterActivity() {
     private val CHANNEL = "samples.flutter.io/iot"
 
     private val TAG = "DEBUG"
-    private val topic = "conditionly/temperature"
+    private val topic = "conditionly/message"
+    private var id:Int = 0;
 
     private val client: AWSIotMqttClient by lazy { connectToAws() }
 
@@ -42,13 +45,24 @@ class MainActivity() : FlutterActivity() {
 
         MethodChannel(flutterView, CHANNEL).setMethodCallHandler { call, result ->
             if (call.method == "publishToDevice") {
-                publish(call.argument("payload")!!)
+               /* val payload = call.argument<Map<String, String>>("command");*/
+                val rootObject= JSONObject()
+                rootObject.put("id",id as Int)
+                rootObject.put("power", call?.argument<Boolean>("power") as Boolean)
+                rootObject.put("mode", call?.argument<Int>("mode") as Int)
+                rootObject.put("fan", call?.argument<Int>("fan") as Int)
+                rootObject.put("swing", call?.argument<Boolean>("swing") as Boolean)
+                rootObject.put("swingLR", call?.argument<Boolean>("swingLR") as Boolean)
+                rootObject.put("temp", call?.argument<Int>("temp") as Int)
+                publish(rootObject!!)
                 result.success(true)
+                id++
             } else {
                 result.notImplemented()
             }
         }
     }
+
 
     fun connectToAws(): AWSIotMqttClient {
         Log.d(TAG, "connect")
@@ -58,10 +72,8 @@ class MainActivity() : FlutterActivity() {
         return client
     }
 
-    fun publish(payload: String) {
-        val rootObject= JSONObject()
-        rootObject.put("temp",payload)
-        val msg = MyMessage(topic, AWSIotQos.QOS0, rootObject.toString())
+    fun publish(payload: JSONObject) {
+        val msg = MyMessage(topic, AWSIotQos.QOS0, payload.toString())
         client.publish(msg, 3000)
     }
 }
