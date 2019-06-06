@@ -26,12 +26,9 @@ This projects use the following software languages and frameworks:
 
 ### Repository tree
 This repository is organized with the following structure:
-* conditionly-app
-	This folder contains the code of our Android application. The applications connects to AWS in order to send the requested commands of the user. 
-* conditionly-board
-	This folder contains the code used for the Nucleo board. The board is polling the AWS Server in order to get the last commands received from the conditionly-app. 
-* conditionly-aws
-	This folder contains the code used from our lambda function in AWS Lambda in order to read from the DB the last received command and return a response to the conditionly-board
+**conditionly-app:** This folder contains the code of our Android application. The applications connects to AWS in order to send the requested commands of the user. 
+**conditionly-board:** This folder contains the code used for the Nucleo board. The board is polling the AWS Server in order to get the last commands received from the conditionly-app. 
+**conditionly-aws:** This folder contains the code used from our lambda function in AWS Lambda in order to read from the DB the last received command and return a response to the conditionly-board
 
 
 
